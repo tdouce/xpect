@@ -6,15 +6,21 @@ module Xpect
 
     def self.nil
       lambda do |val|
-        return true if val.nil?
-        raise_error("'#{ val }' is not nil.")
+        unless val.nil?
+          raise_error("'#{ val }' is not nil.")
+        end
+
+        true
       end
     end
 
     def self.falsy
       lambda do |val|
-        return true if val.nil? || val.empty?
-        raise_error("'#{ val }' is not falsy.")
+        unless val.nil? || val.empty?
+          raise_error("'#{ val }' is not falsy.")
+        end
+
+        true
       end
     end
 
