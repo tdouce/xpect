@@ -26,7 +26,7 @@ module Xpect
 
     def self.truthy
       lambda do |val|
-        if val.is_a?(Fixnum) || val.is_a?(Float)
+        if val.is_a?(Integer) || val.is_a?(Float)
           return true
         end
 
