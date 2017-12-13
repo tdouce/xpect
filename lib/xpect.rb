@@ -1,4 +1,4 @@
-require "xpect/version"
+require 'xpect/version'
 
 module Xpect
   # Your code goes here...
