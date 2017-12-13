@@ -7,11 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "xpect"
   spec.version       = Xpect::VERSION
   spec.authors       = ["Travis Douce"]
-  spec.email         = ["travis.douce@stitchfix.com"]
+  spec.email         = ["travisdouce@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Specs for Hashes.}
+  spec.description   = %q{Specs for Hashes in the terms of Hashes.}
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
