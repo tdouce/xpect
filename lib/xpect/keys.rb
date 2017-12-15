@@ -34,7 +34,7 @@ module Xpect
             data_value = value.fetch(key)
             memo[key] = case val
                           when Hash
-                            Xpect::Spec.conform!(spec: val, data: data_value, path: path << key)
+                            Xpect::Spect.conform!(spec: val, data: data_value, path: path << key)
                           when Pred
                             val.conform!(value: data_value, path: path << key)
                           when Proc
