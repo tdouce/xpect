@@ -63,7 +63,7 @@ RSpec.describe Xpect::Keys do
             }
           }
 
-          expect(Xpect::Spec).to receive(:conform!).with(
+          expect(Xpect::Spect).to receive(:conform!).with(
             {
               spec: {level_1: 1},
               data: {level_1: 1},
@@ -91,7 +91,7 @@ RSpec.describe Xpect::Keys do
             }
           }
 
-          expect(Xpect::Spec).to receive(:conform!).with(
+          expect(Xpect::Spect).to receive(:conform!).with(
             {
               spec: {level_1: 1},
               data: {level_1: 2},
@@ -203,7 +203,7 @@ RSpec.describe Xpect::Keys do
             }
           }
 
-          expect(Xpect::Spec).to receive(:conform!).with(
+          expect(Xpect::Spect).to receive(:conform!).with(
             {
               spec: {level_1: 1},
               data: {level_1: 1},
@@ -231,7 +231,7 @@ RSpec.describe Xpect::Keys do
             }
           }
 
-          expect(Xpect::Spec).to receive(:conform!).with(
+          expect(Xpect::Spect).to receive(:conform!).with(
             {
               spec: {level_1: 1},
               data: {level_1: 2},
