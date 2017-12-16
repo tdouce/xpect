@@ -47,15 +47,17 @@ RSpec.describe Xpect::Matchers do
   describe '.falsy' do
     context 'when truthy' do
       it 'should raise FailedSpec' do
-        expect {
-          described_class.falsy.call("truthy")
-        }.to raise_error(Xpect::FailedSpec, /'truthy' is not falsy/)
+        truthy_values.each do |val|
+          expect {
+            described_class.falsy.call(val)
+          }.to raise_error(Xpect::FailedSpec, /is not falsy/)
+        end
       end
     end
 
     context 'when falsy' do
       it 'should return true' do
-        falsy_values.each do |val|
+        [nil, [], "", {}].each do |val|
           expect(
             described_class.falsy.call(val)
           ).to eq true

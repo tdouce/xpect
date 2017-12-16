@@ -16,11 +16,15 @@ module Xpect
 
     def self.falsy
       lambda do |val|
-        if val.is_a?(Integer) || val.is_a?(Float) || !val.nil? || !val.empty?
+        if val.is_a?(Integer) || val.is_a?(Float)
           raise_error("'#{ val }' is not falsy.")
         end
 
-        true
+        if val.nil? || val.empty?
+          return true
+        end
+
+        raise_error("'#{ val }' is not falsy.")
       end
     end
 
