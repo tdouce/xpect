@@ -512,6 +512,161 @@ RSpec.describe Xpect::Spect do
 
     context 'when contains arrays' do
       context 'when equal' do
+        context 'comparing every item in array' do
+          context 'when equal' do
+            context 'item is a String' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    'hello'
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    'hello',
+                    'hello'
+                  ]
+                }
+
+                expect(
+                  described_class.validate!(spec, data)
+                ).to eq(data)
+              end
+
+            end
+
+            context 'item is a Hash' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    {
+                      return_me_1: 'return_me_1',
+                      return_me_2: 'return_me_2'
+                    }
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    {
+                      return_me_1: 'return_me_1',
+                      return_me_2: 'return_me_2'
+                    },
+                    {
+                      return_me_1: 'return_me_1',
+                      return_me_2: 'return_me_2'
+                    }
+                  ]
+                }
+
+                expect(
+                  described_class.validate!(spec, data)
+                ).to eq(data)
+              end
+            end
+
+            context 'item is a Proc' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    lambda {|v| v == 'return_me_1'}
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    'return_me_1',
+                    'return_me_1'
+                  ]
+                }
+
+                expect(
+                  described_class.validate!(spec, data)
+                ).to eq(data)
+              end
+            end
+
+            context 'item is a Proc' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    Xpect::Pred.new(
+                      pred: lambda {|v| v == 'return_me_1'}
+                    )
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    'return_me_1',
+                    'return_me_1'
+                  ]
+                }
+
+                expect(
+                  described_class.validate!(spec, data)
+                ).to eq(data)
+              end
+            end
+
+            context 'item is a Keys' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    Xpect::Keys.new(
+                      required: {
+                        item_1: 'item_1',
+                        item_2: 'item_2',
+                      }
+                    )
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    {
+                      item_1: 'item_1',
+                      item_2: 'item_2'
+                    }
+                  ]
+                }
+
+                expect(
+                  described_class.validate!(spec, data)
+                ).to eq(data)
+              end
+
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    Xpect::Keys.new(
+                      required: {
+                        item_1: [
+                          'one',
+                          'two'
+                        ],
+                        item_2: 'item_2',
+                      }
+                    )
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    {
+                      item_1: [
+                        'one',
+                        'two',
+                        'three'
+                      ],
+                      item_2: 'item_2'
+                    }
+                  ]
+                }
+
+                expect(
+                  described_class.validate!(spec, data)
+                ).to eq(data)
+              end
+            end
+          end
+        end
+
         it 'should return data' do
           spec = {
             return_me_2: [
@@ -1059,6 +1214,160 @@ RSpec.describe Xpect::Spect do
       end
 
       context 'when unequal' do
+        context 'comparing every item in array' do
+          context 'when equal' do
+            context 'item is a String' do
+              it 'should raise FailedSpec' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    'hello'
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    'hello',
+                    'does_not_conform'
+                  ]
+                }
+
+                expect {
+                  described_class.validate!(spec, data)
+                }.to raise_error(Xpect::FailedSpec)
+              end
+            end
+
+            context 'item is a Hash' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    {
+                      return_me_1: 'return_me_1',
+                      return_me_2: 'return_me_2'
+                    }
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    {
+                      return_me_1: 'return_me_1',
+                      return_me_2: 'return_me_2'
+                    },
+                    {
+                      return_me_1: 'does_not_conform',
+                      return_me_2: 'return_me_2'
+                    }
+                  ]
+                }
+
+                expect {
+                  described_class.validate!(spec, data)
+                }.to raise_error(Xpect::FailedSpec)
+              end
+            end
+
+            context 'item is a Proc' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    lambda {|v| v == 'return_me_1'}
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    'return_me_1',
+                    'does_not_conform'
+                  ]
+                }
+
+                expect {
+                  described_class.validate!(spec, data)
+                }.to raise_error(Xpect::FailedSpec)
+              end
+            end
+
+            context 'item is a Proc' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    Xpect::Pred.new(
+                      pred: lambda {|v| v == 'return_me_1'}
+                    )
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    'return_me_1',
+                    'does_not_conform'
+                  ]
+                }
+
+                expect {
+                  described_class.validate!(spec, data)
+                }.to raise_error(Xpect::FailedSpec)
+              end
+            end
+
+            context 'item is a Keys' do
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    Xpect::Keys.new(
+                      required: {
+                        item_1: 'item_1',
+                        item_2: 'item_2',
+                      }
+                    )
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    {
+                      item_1: 'item_1',
+                      not_a_required_key: 'not_a_required_kdy'
+                    }
+                  ]
+                }
+
+                expect {
+                  described_class.validate!(spec, data)
+                }.to raise_error(Xpect::FailedSpec)
+              end
+
+              it 'should return data' do
+                spec = {
+                  return_me_2: Xpect::Every.new(
+                    Xpect::Keys.new(
+                      required: {
+                        item_1: [
+                          'one',
+                          'two'
+                        ],
+                        item_2: 'item_2',
+                      }
+                    )
+                  )
+                }
+                data = {
+                  return_me_2: [
+                    {
+                      item_1: [
+                        'one',
+                        'does_not_conform',
+                        'three'
+                      ],
+                      item_2: 'item_2'
+                    }
+                  ]
+                }
+
+                expect {
+                  described_class.validate!(spec, data)
+                }.to raise_error(Xpect::FailedSpec)
+              end
+            end
+          end
+        end
+        
         it 'should raise FailedSpec' do
           spec = {
             return_me_2: [

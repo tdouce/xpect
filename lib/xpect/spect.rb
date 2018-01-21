@@ -1,4 +1,31 @@
 module Xpect
+  # TODO:
+  #   * Move to own file
+  #   * Add tests
+  class Every
+    def initialize(item_spec)
+      @item_spec = item_spec
+    end
+
+    def conform!(data:, path: [])
+      # NOTE: Same as Spec implementation, except for what
+      # is being cased and is being iterated over
+      data.map.with_index do |val, _|
+        case @item_spec
+          when Hash
+            Xpect::Spect.conform!(spec: @item_spec, data: val, path: path)
+          when Pred, Keys
+            @item_spec.conform!(value: val, path: path)
+          when Proc
+            Xpect::EqualityHelpers.equal_with_proc?(@item_spec, val, path)
+            val
+          else
+            Xpect::EqualityHelpers.equal?(@item_spec, val, path)
+            val
+        end
+      end
+    end
+  end
 
   class Spect
     def self.conform!(spec:, data:, path: [])
@@ -34,8 +61,9 @@ module Xpect
         data_value = data[key]
         memo[key] = if !value.is_a?(Hash)
                       case value
+                        when Xpect::Every
+                          value.conform!(data: data_value, path: path << key)
                         when Array
-
                           unless data_value.is_a?(Array)
                             raise(FailedSpec, "'#{ data_value }' must be an array")
                           end
