@@ -1,0 +1,6 @@
+* conform!(spec: spec, data: data) -> conform!(spec, data)
+* refactor Keys when_value_does_not_have_key
+* Add array support
+* Fix paths
+* Add unit tests for Keys and arrays
+* Figure out how to reuse array code in Spec and Keys

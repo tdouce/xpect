@@ -1,4 +1,5 @@
 module Xpect
+
   class Spect
     def self.conform!(spec:, data:, path: [])
       new.conform!(spec: spec, data: data, path: path)
@@ -24,6 +25,7 @@ module Xpect
 
     def call(spec:, data:, path: [], init: {})
       spec.reduce(init) do |memo, (key, value)|
+
         unless data.is_a?(Hash)
           raise(FailedSpec, "'#{ data }' is not equal to '#{ value }'")
         end
@@ -32,6 +34,31 @@ module Xpect
         data_value = data[key]
         memo[key] = if !value.is_a?(Hash)
                       case value
+                        when Array
+
+                          unless data_value.is_a?(Array)
+                            raise(FailedSpec, "'#{ data_value }' must be an array")
+                          end
+
+                          # NOTE: Same as Spec implementation, except for what
+                          # is being cased and is being iterated over
+                          value.map.with_index do |spc, idx|
+                            val = data_value[idx]
+
+                            case spc
+                              when Hash
+                                call(spec: spc, data: val, path: path << key)
+                              when Pred, Keys
+                                spc.conform!(value: val, path: path << key)
+                              when Proc
+                                Xpect::EqualityHelpers.equal_with_proc?(spc, val, path)
+                                val
+                              else
+                                Xpect::EqualityHelpers.equal?(spc, val, path)
+                                val
+                            end
+                          end
+
                         when Pred, Keys
                           value.conform!(value: data_value, path: path)
                         when Proc

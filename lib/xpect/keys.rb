@@ -33,6 +33,30 @@ module Xpect
           if value.has_key?(key)
             data_value = value.fetch(key)
             memo[key] = case val
+                          when Array
+                            unless data_value.is_a?(Array)
+                              raise(FailedSpec, "'#{ data_value }' must be an array")
+                            end
+
+                            # NOTE: Same as Spec implementation, except for what
+                            # is being cased and is being iterated over
+                            val.map.with_index do |spc, idx|
+                              dat_val = data_value[idx]
+
+                              case spc
+                                when Hash
+                                  Xpect::Spect.conform!(spec: spc, data: dat_val, path: path << key)
+                                when Pred, Keys
+                                  spc.conform!(value: dat_val, path: path << key)
+                                when Proc
+                                  Xpect::EqualityHelpers.equal_with_proc?(spc, dat_val, path)
+                                  dat_val
+                                else
+                                  Xpect::EqualityHelpers.equal?(spc, dat_val, path)
+                                  dat_val
+                              end
+                            end
+
                           when Hash
                             Xpect::Spect.conform!(spec: val, data: data_value, path: path << key)
                           when Pred
@@ -41,6 +65,7 @@ module Xpect
                             Xpect::EqualityHelpers.equal_with_proc?(val, data_value, path)
                             data_value
                           else
+                            # byebug
                             Xpect::EqualityHelpers.equal?(data_value, val, path)
                             data_value
                         end
