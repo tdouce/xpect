@@ -646,6 +646,7 @@ RSpec.describe Xpect::Spect do
             ).to eq(data)
           end
 
+          # TODO: move this to keys_spec.rb
           context 'when Key contains an array' do
             context 'when value compared directly' do
               it 'should return data' do
@@ -1122,6 +1123,7 @@ RSpec.describe Xpect::Spect do
             }.to raise_error(Xpect::FailedSpec)
           end
 
+          # TODO: move this to keys_spec.rb
           context 'when Key contains an array' do
             it 'should raise FailedSpec' do
               spec = {
