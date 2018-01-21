@@ -1485,8 +1485,6 @@ RSpec.describe Xpect::Spect do
               ]
             }
 
-            # described_class.validate!(spec, data)
-
             expect {
               described_class.validate!(spec, data)
             }.to raise_error(Xpect::FailedSpec)
@@ -1573,62 +1571,6 @@ RSpec.describe Xpect::Spect do
           end
         end
       end
-
-        # context 'when not equal' do
-        #   context 'extra item in data' do
-        #     it 'should raise FailedSpect' do
-        #       spec = {
-        #         return_me_2: [{return_me_1: 'return_me_1', return_me_2: 'return_me_2'}]
-        #       }
-        #       data = {
-        #         return_me_2: [
-        #           {
-        #             return_me_1: 'return_me_1',
-        #             return_me_2: 'return_me_2'
-        #           },
-        #           {
-        #             return_me_1: 'not_equal',
-        #             return_me_2: 'return_me_2'
-        #           },
-        #         ]
-        #       }
-        #
-        #       # byebug
-        #       described_class.validate!(spec, data)
-        #
-        #       expect {
-        #         described_class.validate!(spec, data)
-        #       }.to raise_error(Xpect::FailedSpec)
-        #     end
-        #   end
-        #
-        #   it 'should raise FailedSpect' do
-        #     spec = {
-        #       return_me_2: [{return_me_1: 'return_me_1', return_me_2: 'return_me_2'}]
-        #     }
-        #     data = {
-        #       return_me_2: [{return_me_1: 'not_equal', return_me_2: 'return_me_2'}]
-        #     }
-        #
-        #     expect {
-        #       described_class.validate!(spec, data)
-        #     }.to raise_error(Xpect::FailedSpec)
-        #   end
-        #
-        #   it 'should raise FailedSpect' do
-        #     spec = {
-        #       return_me_2: [{return_me_1: 'return_me_1', return_me_2: 'return_me_2'}]
-        #     }
-        #     data = {
-        #       return_me_2: [{return_me_1: 'not_equal', return_me_2: 'return_me_2'}]
-        #     }
-        #
-        #     expect {
-        #       described_class.validate!(spec, data)
-        #     }.to raise_error(Xpect::FailedSpec)
-        #   end
-        #
-        # end
     end
   end
 
