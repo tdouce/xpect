@@ -1,19 +1,4 @@
 module Xpect
-  # TODO:
-  #   * Move to own file
-  #   * Add tests
-  class Every
-    def initialize(item_spec)
-      @item_spec = item_spec
-    end
-
-    def conform!(data:, path: [])
-      data.map.with_index do |val, _|
-        Xpect::Type.process(@item_spec, @item_spec, val, path)
-      end
-    end
-  end
-
   class Spect
     def self.conform!(spec:, data:, path: [])
       new.conform!(spec: spec, data: data, path: path)
