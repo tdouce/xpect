@@ -4,13 +4,13 @@ module Xpect
       new.conform!(spec: spec, data: data, path: path)
     end
 
-    def self.validate!(spec, data)
-      new.validate!(spec, data)
+    def self.validate!(spec:, data:)
+      new.validate!(spec: spec, data: data)
     end
 
     # 1) Raise exception if spec isn't satisfied
     # 2) Return original data
-    def validate!(spec, data)
+    def validate!(spec:, data:)
       call(spec: spec, data: data, init: data)
     end
 

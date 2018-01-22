@@ -13,7 +13,7 @@ RSpec.describe Xpect::Spect do
             return_me_3: 'return_me_3',
           }
 
-          expect(described_class.validate!(spec, data)).to eq data
+          expect(described_class.validate!(spec: spec, data: data)).to eq data
         end
 
         it 'returns data when valid' do
@@ -27,7 +27,7 @@ RSpec.describe Xpect::Spect do
             return_me_3: 'return_me_3',
           }
 
-          expect(described_class.validate!(spec, data)).to eq data
+          expect(described_class.validate!(spec: spec, data: data)).to eq data
         end
       end
 
@@ -44,7 +44,7 @@ RSpec.describe Xpect::Spect do
           }
 
           expect {
-            described_class.validate!(spec, data)
+            described_class.validate!(spec: spec, data: data)
           }.to raise_error(Xpect::FailedSpec, "'' is not truthy.")
         end
 
@@ -60,7 +60,7 @@ RSpec.describe Xpect::Spect do
           }
 
           expect {
-            described_class.validate!(spec, data)
+            described_class.validate!(spec: spec, data: data)
           }.to raise_error(Xpect::FailedSpec, "'2' is not falsy.")
         end
       end
@@ -80,7 +80,7 @@ RSpec.describe Xpect::Spect do
             return_me_2: 'return_me_2',
           }
 
-          expect(described_class.validate!(spec, data)).to eq data
+          expect(described_class.validate!(spec: spec, data: data)).to eq data
         end
       end
 
@@ -98,7 +98,7 @@ RSpec.describe Xpect::Spect do
           }
 
           expect {
-            described_class.validate!(spec, data)
+            described_class.validate!(spec: spec, data: data)
           }.to raise_error(Xpect::FailedSpec)
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe Xpect::Spect do
             not_in_spec: 'not_in_spec'
           }
 
-          expect(described_class.validate!(spec, data)).to eq(
+          expect(described_class.validate!(spec: spec, data: data)).to eq(
                                                              {
                                                                return_me_1: 'my_default',
                                                                return_me_2: 'return_me_2',
@@ -150,7 +150,7 @@ RSpec.describe Xpect::Spect do
               return_me_2: 'return_me_2',
             }
 
-            expect(described_class.validate!(spec, data)).to eq data
+            expect(described_class.validate!(spec: spec, data: data)).to eq data
           end
         end
 
@@ -174,7 +174,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec, "does not include 'level_2' at '[:return_me_1]'")
           end
         end
@@ -215,7 +215,7 @@ RSpec.describe Xpect::Spect do
                 }
               }
 
-              expect(described_class.validate!(spec, data)).to eq(data)
+              expect(described_class.validate!(spec: spec, data: data)).to eq(data)
             end
           end
 
@@ -251,7 +251,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -291,7 +291,7 @@ RSpec.describe Xpect::Spect do
                 }
               }
 
-              expect(described_class.validate!(spec, data)).to eq(data)
+              expect(described_class.validate!(spec: spec, data: data)).to eq(data)
             end
           end
 
@@ -328,7 +328,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -366,7 +366,7 @@ RSpec.describe Xpect::Spect do
                 }
               }
 
-              expect(described_class.validate!(spec, data)).to eq(data)
+              expect(described_class.validate!(spec: spec, data: data)).to eq(data)
             end
           end
 
@@ -403,7 +403,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -456,7 +456,7 @@ RSpec.describe Xpect::Spect do
               return_me_2: 'return_me_2',
             }
 
-            expect(described_class.validate!(spec, data)).to eq data
+            expect(described_class.validate!(spec: spec, data: data)).to eq data
           end
         end
 
@@ -503,7 +503,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
         end
@@ -529,7 +529,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
 
@@ -559,7 +559,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -579,7 +579,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -601,7 +601,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -628,7 +628,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
 
@@ -660,7 +660,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -686,7 +686,7 @@ RSpec.describe Xpect::Spect do
           }
 
           expect(
-            described_class.validate!(spec, data)
+            described_class.validate!(spec: spec, data: data)
           ).to eq(data)
         end
 
@@ -714,7 +714,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             ).to eq(data)
           end
         end
@@ -755,7 +755,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             ).to eq(data)
           end
         end
@@ -797,7 +797,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             ).to eq(data)
           end
 
@@ -847,7 +847,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -902,7 +902,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -953,7 +953,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -1010,7 +1010,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -1059,7 +1059,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect(
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 ).to eq(data)
               end
             end
@@ -1097,7 +1097,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             ).to eq(data)
           end
 
@@ -1131,7 +1131,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect(
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               ).to eq(
                      {
                        return_me_2: [
@@ -1184,7 +1184,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             ).to eq(data)
           end
         end
@@ -1207,7 +1207,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             ).to eq(data)
           end
         end
@@ -1231,7 +1231,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect {
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 }.to raise_error(Xpect::FailedSpec)
               end
             end
@@ -1260,7 +1260,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect {
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 }.to raise_error(Xpect::FailedSpec)
               end
             end
@@ -1280,7 +1280,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect {
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 }.to raise_error(Xpect::FailedSpec)
               end
             end
@@ -1302,7 +1302,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect {
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 }.to raise_error(Xpect::FailedSpec)
               end
             end
@@ -1329,7 +1329,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect {
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 }.to raise_error(Xpect::FailedSpec)
               end
 
@@ -1361,7 +1361,7 @@ RSpec.describe Xpect::Spect do
                 }
 
                 expect {
-                  described_class.validate!(spec, data)
+                  described_class.validate!(spec: spec, data: data)
                 }.to raise_error(Xpect::FailedSpec)
               end
             end
@@ -1387,7 +1387,7 @@ RSpec.describe Xpect::Spect do
           }
 
           expect {
-            described_class.validate!(spec, data)
+            described_class.validate!(spec: spec, data: data)
           }.to raise_error(Xpect::FailedSpec)
         end
 
@@ -1428,7 +1428,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
 
@@ -1477,7 +1477,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -1532,7 +1532,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -1583,7 +1583,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -1640,7 +1640,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -1689,7 +1689,7 @@ RSpec.describe Xpect::Spect do
               }
 
               expect {
-                described_class.validate!(spec, data)
+                described_class.validate!(spec: spec, data: data)
               }.to raise_error(Xpect::FailedSpec)
             end
           end
@@ -1725,7 +1725,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
         end
@@ -1764,7 +1764,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
         end
@@ -1795,7 +1795,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
         end
@@ -1813,7 +1813,7 @@ RSpec.describe Xpect::Spect do
           }
 
           expect {
-            described_class.validate!(spec, data)
+            described_class.validate!(spec: spec, data: data)
           }.to raise_error(Xpect::FailedSpec)
         end
 
@@ -1853,7 +1853,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
         end
@@ -1875,7 +1875,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect {
-              described_class.validate!(spec, data)
+              described_class.validate!(spec: spec, data: data)
             }.to raise_error(Xpect::FailedSpec)
           end
         end
@@ -3365,7 +3365,7 @@ RSpec.describe Xpect::Spect do
             }
 
             expect(
-              described_class.validate!(spec, data)
+              described_class.conform!(spec: spec, data: data)
             ).to eq(
                    {
                      return_me_2: [
