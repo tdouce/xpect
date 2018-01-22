@@ -191,10 +191,10 @@ Xpect::Spect.validate!(spec: spec, data: {name: 'Back Street Boys'})
 
 ```ruby
 spec = {
-         name: Xpect::Pred.new(
-                 pred: lambda {|v| ['Andre 3000', 'Big Boi'].include?(v) }
-               )
-       }
+  name: Xpect::Pred.new(
+    pred: lambda {|v| ['Andre 3000', 'Big Boi'].include?(v) }
+  )
+}
 
 # Passes
 Xpect::Spect.validate!(spec: spec, data: {name: 'Big Boi'})
@@ -208,11 +208,11 @@ Providing a default value
 
 ```ruby
 spec = {
-         name: Xpect::Pred.new(
-                 pred: lambda {|v| ['Andre 3000', 'Big Boi'].include?(v) },
-                 default: 'Dr. Seuss'
-               )
-       }
+  name: Xpect::Pred.new(
+    pred: lambda {|v| ['Andre 3000', 'Big Boi'].include?(v) },
+    default: 'Dr. Seuss'
+  )
+}
 
 # Passes
 Xpect::Spect.validate!(spec: spec, data: {name: 'Big Boi'})
