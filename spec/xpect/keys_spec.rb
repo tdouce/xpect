@@ -41,7 +41,7 @@ RSpec.describe Xpect::Keys do
 
           expect {
             keys.conform!(value: value)
-          }.to raise_error(Xpect::FailedSpec, "'not_a_match' does not meet spec for '[:my_required_key]'")
+          }.to raise_error(Xpect::FailedSpec)
         end
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Xpect::Keys do
             {
               spec: {level_1: 1},
               data: {level_1: 1},
-              path: [:my_required_key]
+              path: []
             }
           )
 
@@ -95,7 +95,7 @@ RSpec.describe Xpect::Keys do
             {
               spec: {level_1: 1},
               data: {level_1: 2},
-              path: [:my_required_key]
+              path: []
             }
           )
 
@@ -179,7 +179,7 @@ RSpec.describe Xpect::Keys do
 
           expect{
             keys.conform!(value: value)
-          }.to raise_error(Xpect::FailedSpec, "'does not match' is not equal to 'my_required_key' at '[]'")
+          }.to raise_error(Xpect::FailedSpec)
         end
       end
     end
@@ -207,7 +207,7 @@ RSpec.describe Xpect::Keys do
             {
               spec: {level_1: 1},
               data: {level_1: 1},
-              path: [:my_optional_key]
+              path: []
             }
           )
 
@@ -235,7 +235,7 @@ RSpec.describe Xpect::Keys do
             {
               spec: {level_1: 1},
               data: {level_1: 2},
-              path: [:my_optional_key]
+              path: []
             }
           )
 
@@ -283,7 +283,7 @@ RSpec.describe Xpect::Keys do
 
           expect {
             keys.conform!(value: value)
-          }.to raise_error(Xpect::FailedSpec, "'not_a_match' does not meet spec for '[:my_optional_key]'")
+          }.to raise_error(Xpect::FailedSpec)
         end
       end
     end
@@ -363,7 +363,7 @@ RSpec.describe Xpect::Keys do
 
           expect{
             keys.conform!(value: value)
-          }.to raise_error(Xpect::FailedSpec, "'does not match' is not equal to 'my_optional_key' at '[]'")
+          }.to raise_error(Xpect::FailedSpec)
         end
       end
     end
