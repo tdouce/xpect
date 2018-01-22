@@ -1,2 +1,7 @@
 * Fix paths
-* Add unit tests for Keys and arrays
+* Add unit tests for
+  * Keys and arrays
+  * Every
+  * Type
+    * Then remove A LOT of tests in spect_spec.rb
+
