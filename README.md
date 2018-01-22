@@ -55,18 +55,20 @@ does not adhere to the structure of the spec.
 ### `.validate!`
 
 ```ruby
+# Passes
 spec = {
   name: 'Andre 3000',
   age: lambda {|v| v > 40 }
 }
 
-data = {
-  name: 'Andre 3000',
-  age: 47,
-  favorite_color: 'red'
-}
-
-validated_data = Xpect::Spect.validate!(spec: spec, data: data)
+validated_data = Xpect::Spect.validate!(
+  spec: spec,
+  data: {
+    name: 'Andre 3000',
+    age: 47,
+    favorite_color: 'red'
+  }
+)
 
 puts validated_data
 # {
@@ -75,6 +77,15 @@ puts validated_data
 #  favorite_color: 'red'
 # }
 
+# Fails and raises Xpect::FailedSpec
+Xpect::Spect.validate!(
+  spec: spec,
+  data: {
+    name: 'Andre 3000',
+    age: 4,
+    favorite_color: 'red'
+  }
+)
 ```
 
 ### `.conform!`
@@ -85,13 +96,15 @@ spec = {
   age: lambda {|v| v > 40 }
 }
 
-data = {
-  name: 'Andre 3000',
-  age: 47,
-  favorite_color: 'red'
-}
-
-validated_data = Xpect::conform!(spec: spec, data: data)
+# Passes
+validated_data = Xpect::conform!(
+  spec: spec,
+  data: {
+    name: 'Andre 3000',
+    age: 47,
+    favorite_color: 'red'
+  }
+)
 
 puts validated_data
 # {
@@ -99,11 +112,18 @@ puts validated_data
 #  age: 47,
 # }
 
+# Fails and raises Xpect::FailedSpec
+Xpect::Spect.validate!(
+  spec: spec,
+  data: {
+    name: 'Andre 3000',
+    age: 4,
+    favorite_color: 'red'
+  }
+)
 ```
 
 ## `Hash` values
-
-## `Matcher`s
 
 ### `truthy`
 
