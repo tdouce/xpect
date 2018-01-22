@@ -458,6 +458,149 @@ Xpect::Spect.validate!(
 )
 ```
 
+## Highly Nested Hashes
+
+```ruby
+spec = {
+  people: Xpect::Every.new(
+    {
+      name: Xpect::Matchers.truthy,
+      footwear: lambda {|v| ['flip flops', 'flip flops and socks'].include?(v) },
+      things: [
+        1,
+        2,
+        3,
+        {a: 'a'},
+        [
+          'one',
+          'two',
+          Xpect::Pred.new(
+            pred: lambda {|v| v == 'three'},
+            default: 'my-default'
+          )
+        ]
+      ],
+      other: Xpect::Keys.new(
+        required: {
+          b: 'b',
+          c: 'c',
+          f: [
+            4,
+            5,
+            6,
+            lambda {|v| v > 8},
+          ],
+          g: Xpect::Every.new(
+            {
+              id: lambda {|v| v > 100}
+            }
+          )
+        },
+        optional: {d: 'd', e: 'e'}
+      )
+    }
+  ),
+}
+
+# Passes
+conformed_data = Xpect::Spect.conform!(
+  spec: spec,
+  data: {
+    people: [
+      {
+        name: 'Andre 3000',
+        footwear: 'flip flops',
+        not_required_by_spec: 'not_required_by_spec',
+        things: [
+          1,
+          2,
+          3,
+          {a: 'a'},
+          [
+            'one',
+            'two'
+          ]
+        ],
+        other: {
+          b: 'b',
+          c: 'c',
+          e: 'e',
+          f: [
+            4,
+            5,
+            6,
+            9
+          ],
+          g: [
+            {
+              id: 101,
+              id: 102
+            },
+          ],
+          not_required_by_spec: [1, 2, 3, 4]
+        }
+      }
+    ]
+  }
+)
+
+puts conformed_data
+# {
+#  :people => [
+#    {
+#      :name => "Andre 3000",
+#      :footwear => "flip flops",
+#      :things => [1, 2, 3, {:a => "a"}, ["one", "two", "my-default"]],
+#      :other => { :b => "b", :c => "c", :f => [4, 5, 6, 9], :g => [{:id => 102}], :e => "e"
+#      }
+#    }
+#  ]
+# }
+
+# Fails
+Xpect::Spect.conform!(
+  spec: spec,
+  data: {
+    people: [
+      {
+        name: 'Andre 3000',
+        footwear: 'flip flops',
+        not_required_by_spec: 'not_required_by_spec',
+        things: [
+          1,
+          2,
+          3,
+          {a: 'a'},
+          [
+            'one',
+            'two'
+          ]
+        ],
+        other: {
+          b: 'b',
+          c: 'c',
+          e: 'e',
+          f: [
+            4,
+            5,
+            6,
+            9
+          ],
+          g: [
+            {
+              id: 101,
+              id: 2 # Not greater than 100 as specified in spec
+            },
+          ],
+          not_required_by_spec: [1, 2, 3, 4]
+        }
+      }
+    ]
+  }
+)
+
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
