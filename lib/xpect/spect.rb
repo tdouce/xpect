@@ -1,30 +1,4 @@
 module Xpect
-
-  # TODO: Move to helper file
-  def self.process_array(iterable, data, path)
-    iterable.map.with_index do |spc, idx|
-      Xpect.process_type(spc, spc, data[idx], path)
-    end
-  end
-
-  # TODO: Move to helper file
-  def self.process_type(case_item, spec, val, path)
-      case case_item
-        when Array
-          Xpect.process_array(spec, val, path)
-        when Hash
-          Xpect::Spect.conform!(spec: spec, data: val, path: path)
-        when Pred, Keys
-          spec.conform!(value: val, path: path)
-        when Proc
-          Xpect::EqualityHelpers.equal_with_proc?(spec, val, path)
-          val
-        else
-          Xpect::EqualityHelpers.equal?(spec, val, path)
-          val
-      end
-  end
-
   # TODO:
   #   * Move to own file
   #   * Add tests
@@ -35,7 +9,7 @@ module Xpect
 
     def conform!(data:, path: [])
       data.map.with_index do |val, _|
-        Xpect.process_type(@item_spec, @item_spec, val, path)
+        Xpect::Type.process(@item_spec, @item_spec, val, path)
       end
     end
   end
@@ -73,24 +47,7 @@ module Xpect
         path = path << key
         data_value = data[key]
         memo[key] = if !value.is_a?(Hash)
-                      case value
-                        when Xpect::Every
-                          value.conform!(data: data_value, path: path << key)
-                        when Array
-                          unless data_value.is_a?(Array)
-                            raise(FailedSpec, "'#{ data_value }' must be an array")
-                          end
-
-                          Xpect.process_array(value, data_value, path)
-                        when Pred, Keys
-                          value.conform!(value: data_value, path: path)
-                        when Proc
-                          Xpect::EqualityHelpers.equal_with_proc?(value, data_value, path)
-                          data_value
-                        else
-                          Xpect::EqualityHelpers.equal?(value, data_value, path)
-                          data_value
-                      end
+                      Xpect::Type.process(value, value, data_value, path)
                     else
                       call(spec: spec[key], data: data_value, path: path)
                     end
