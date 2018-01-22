@@ -1,4 +1,30 @@
 module Xpect
+
+  # TODO: Move to helper file
+  def self.process_array(iterable, data, path)
+    iterable.map.with_index do |spc, idx|
+      Xpect.process_type(spc, spc, data[idx], path)
+    end
+  end
+
+  # TODO: Move to helper file
+  def self.process_type(case_item, spec, val, path)
+      case case_item
+        when Array
+          Xpect.process_array(spec, val, path)
+        when Hash
+          Xpect::Spect.conform!(spec: spec, data: val, path: path)
+        when Pred, Keys
+          spec.conform!(value: val, path: path)
+        when Proc
+          Xpect::EqualityHelpers.equal_with_proc?(spec, val, path)
+          val
+        else
+          Xpect::EqualityHelpers.equal?(spec, val, path)
+          val
+      end
+  end
+
   # TODO:
   #   * Move to own file
   #   * Add tests
@@ -8,21 +34,8 @@ module Xpect
     end
 
     def conform!(data:, path: [])
-      # NOTE: Same as Spec implementation, except for what
-      # is being cased and is being iterated over
       data.map.with_index do |val, _|
-        case @item_spec
-          when Hash
-            Xpect::Spect.conform!(spec: @item_spec, data: val, path: path)
-          when Pred, Keys
-            @item_spec.conform!(value: val, path: path)
-          when Proc
-            Xpect::EqualityHelpers.equal_with_proc?(@item_spec, val, path)
-            val
-          else
-            Xpect::EqualityHelpers.equal?(@item_spec, val, path)
-            val
-        end
+        Xpect.process_type(@item_spec, @item_spec, val, path)
       end
     end
   end
@@ -68,25 +81,7 @@ module Xpect
                             raise(FailedSpec, "'#{ data_value }' must be an array")
                           end
 
-                          # NOTE: Same as Spec implementation, except for what
-                          # is being cased and is being iterated over
-                          value.map.with_index do |spc, idx|
-                            val = data_value[idx]
-
-                            case spc
-                              when Hash
-                                call(spec: spc, data: val, path: path << key)
-                              when Pred, Keys
-                                spc.conform!(value: val, path: path << key)
-                              when Proc
-                                Xpect::EqualityHelpers.equal_with_proc?(spc, val, path)
-                                val
-                              else
-                                Xpect::EqualityHelpers.equal?(spc, val, path)
-                                val
-                            end
-                          end
-
+                          Xpect.process_array(value, data_value, path)
                         when Pred, Keys
                           value.conform!(value: data_value, path: path)
                         when Proc
