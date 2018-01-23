@@ -33,7 +33,7 @@ def some_function(hash_payload)
     person: {
       first_name: Xpect::Matchers.truthy,
       last_name: Xpect::Matchers.truthy,
-      favorite_food: lambda {|v| ['pizza', 'humus', 'pickles'].include?(v) },
+      footwear: lambda {|v| ['flip flops', 'flip flops and socks', 'hiking boots'].include?(v) },
       state: 'GA'
     }
   }
@@ -55,18 +55,18 @@ does not adhere to the structure of the spec.
 ### `.validate!`
 
 ```ruby
-# Passes
 spec = {
   name: 'Andre 3000',
   age: lambda {|v| v > 40 }
 }
 
+# Passes
 validated_data = Xpect::Spect.validate!(
   spec: spec,
   data: {
     name: 'Andre 3000',
     age: 47,
-    favorite_color: 'red'
+    footwear: 'flip flops and socks'
   }
 )
 
@@ -74,7 +74,7 @@ puts validated_data
 # {
 #  name: 'Andre 3000',
 #  age: 47,
-#  favorite_color: 'red'
+#  foot_wear: 'flip flops and socks'
 # }
 
 # Fails and raises Xpect::FailedSpec
@@ -82,8 +82,8 @@ Xpect::Spect.validate!(
   spec: spec,
   data: {
     name: 'Andre 3000',
-    age: 4,
-    favorite_color: 'red'
+    age: 4, # Not greater than 40 as specified in spec
+    footwear: 'flip flops and socks'
   }
 )
 ```
@@ -102,7 +102,7 @@ validated_data = Xpect::Spect.conform!(
   data: {
     name: 'Andre 3000',
     age: 47,
-    favorite_color: 'red'
+    footwear: 'flip flops and socks'
   }
 )
 
@@ -117,8 +117,8 @@ Xpect::Spect.conform!(
   spec: spec,
   data: {
     name: 'Andre 3000',
-    age: 4,
-    favorite_color: 'red'
+    age: 4, # Not greater than 40 as specified in spec
+    footwear: 'flip flops and socks'
   }
 )
 ```
