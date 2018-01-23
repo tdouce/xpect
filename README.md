@@ -113,7 +113,7 @@ puts validated_data
 # }
 
 # Fails and raises Xpect::FailedSpec
-Xpect::Spect.validate!(
+Xpect::Spect.conform!(
   spec: spec,
   data: {
     name: 'Andre 3000',
