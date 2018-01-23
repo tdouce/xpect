@@ -534,8 +534,10 @@ conformed_data = Xpect::Spect.conform!(
           g: [
             {
               id: 101,
-              id: 102
             },
+            {
+              id: 102
+            }
           ],
           not_required_by_spec: [1, 2, 3, 4]
         }
@@ -589,8 +591,11 @@ Xpect::Spect.conform!(
           g: [
             {
               id: 101,
-              id: 2 # Not greater than 100 as specified in spec
+
             },
+            {
+              id: 2 # Not greater than 100 as specified in spec
+            }
           ],
           not_required_by_spec: [1, 2, 3, 4]
         }
@@ -598,7 +603,6 @@ Xpect::Spect.conform!(
     ]
   }
 )
-
 ```
 
 ## Development
