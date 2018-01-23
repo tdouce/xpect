@@ -97,7 +97,7 @@ spec = {
 }
 
 # Passes
-validated_data = Xpect::conform!(
+validated_data = Xpect::Spect.conform!(
   spec: spec,
   data: {
     name: 'Andre 3000',
