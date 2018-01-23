@@ -131,10 +131,10 @@ Xpect::Spect.conform!(
 spec = { name: Xpect::Matchers.truthy }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre 3000'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre 3000'})
 
 # Fails
-Xpect::Spect.validate!(spec: spec, data: {name: false})
+Xpect::Spect.validate!(spec: spec, data: { name: false})
 ```
 
 ### `falsy`
@@ -143,10 +143,10 @@ Xpect::Spect.validate!(spec: spec, data: {name: false})
 spec = { name: Xpect::Matchers.falsy }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: ''})
+Xpect::Spect.validate!(spec: spec, data: { name: ''})
 
 # Fails
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre 3000'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre 3000'})
 ```
 
 ### `anything`
@@ -155,8 +155,8 @@ Xpect::Spect.validate!(spec: spec, data: {name: 'Andre 3000'})
 spec = { name: Xpect::Matchers.anything }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: nil})
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre 3000'})
+Xpect::Spect.validate!(spec: spec, data: { name: nil})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre 3000'})
 
 # Fails
 Xpect::Spect.validate!(spec: spec, data: {})
@@ -168,10 +168,10 @@ Xpect::Spect.validate!(spec: spec, data: {})
 spec = { name: Xpect::Matchers.nil }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: nil})
+Xpect::Spect.validate!(spec: spec, data: { name: nil})
 
 # Fails
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre 3000'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre 3000'})
 ```
 
 ### Custom
@@ -180,11 +180,11 @@ Xpect::Spect.validate!(spec: spec, data: {name: 'Andre 3000'})
 spec = { name: lambda {|v| ['Andre 3000', 'Big Boi'].include?(v) } }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: 'Big Boi'})
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Big Boi'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre'})
 
 # Fails
-Xpect::Spect.validate!(spec: spec, data: {name: 'Back Street Boys'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Back Street Boys'})
 ```
 
 ### `Pred`
@@ -197,11 +197,11 @@ spec = {
 }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: 'Big Boi'})
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Big Boi'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre'})
 
 # Fails
-Xpect::Spect.validate!(spec: spec, data: {name: 'Back Street Boys'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Back Street Boys'})
 ```
 
 Providing a default value
@@ -215,15 +215,15 @@ spec = {
 }
 
 # Passes
-Xpect::Spect.validate!(spec: spec, data: {name: 'Big Boi'})
-Xpect::Spect.validate!(spec: spec, data: {name: 'Andre'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Big Boi'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Andre'})
 validated_data = Xpect::Spect.validate!(spec: spec, data: {})
 
 puts validated_data
 # { name: 'Dr. Seuss' }
 
 # Fails
-Xpect::Spect.validate!(spec: spec, data: {name: 'Back Street Boys'})
+Xpect::Spect.validate!(spec: spec, data: { name: 'Back Street Boys'})
 ```
 
 ### Arrays
@@ -282,7 +282,7 @@ Xpect::Spect.validate!(
   }
 )
 
-# Fails
+# Fails - missing second item in array in spec
 Xpect::Spect.validate!(
   spec: spec,
   data: {
@@ -361,7 +361,7 @@ Xpect::Spect.validate!(
       },
       {
         name: 'Travis',
-        footwear: 'Hiking Boots'
+        footwear: 'Hiking Boots' # footwear does not adhere to specification
       }
     ]
   }
@@ -374,13 +374,13 @@ Requiring keys
 
 ```ruby
 spec = {
-        person: Xpect::Keys.new(
-          required: {
-            name: 'Andre 3000',
-            footwear: lambda {|v| ['flip flops', 'socks'].include?(v) }
-          }
-        ),
-       }
+  person: Xpect::Keys.new(
+    required: {
+      name: 'Andre 3000',
+      footwear: lambda {|v| ['flip flops', 'socks'].include?(v) }
+    }
+  ),
+}
 
 # Passes
 Xpect::Spect.validate!(
@@ -398,9 +398,9 @@ Xpect::Spect.validate!(
 Xpect::Spect.validate!(
   spec: spec,
   data: {
-    person: {
+    person: { 
       footwear: 'socks',
-      age: 45
+      age: 45  # Missing the `name` key as specified in spec
     }
   }
 )
@@ -410,16 +410,16 @@ Optional keys
 
 ```ruby
 spec = {
-        person: Xpect::Keys.new(
-          required: {
-            name: 'Andre 3000',
-            footwear: lambda {|v| ['flip flops', 'socks'].include?(v) }
-          },
-          optional: {
-            style: 'ice cold'
-          }
-        ),
-       }
+  person: Xpect::Keys.new(
+    required: {
+      name: 'Andre 3000',
+      footwear: lambda {|v| ['flip flops', 'socks'].include?(v) }
+    },
+    optional: {
+      style: 'ice cold'
+    }
+  ),
+}
 
 # Passes
 Xpect::Spect.validate!(
@@ -452,7 +452,7 @@ Xpect::Spect.validate!(
     person: {
       footwear: 'socks',
       age: 45,
-      style: 'too hot for the hot tub'
+      style: 'too hot for the hot tub' # Does not meet specification
     }
   }
 )
