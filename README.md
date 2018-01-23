@@ -553,8 +553,7 @@ puts conformed_data
 #      :name => "Andre 3000",
 #      :footwear => "flip flops",
 #      :things => [1, 2, 3, {:a => "a"}, ["one", "two", "my-default"]],
-#      :other => { :b => "b", :c => "c", :f => [4, 5, 6, 9], :g => [{:id=>101}, {:id => 102}], :e => "e"
-#      }
+#      :other => {:b => "b", :c => "c", :f => [4, 5, 6, 9], :g => [{:id=>101}, {:id => 102}], :e => "e"}
 #    }
 #  ]
 # }
