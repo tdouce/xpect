@@ -1,6 +1,6 @@
 # Xpect
 
-A Ruby Hash specification to ensure unstructured data is structured the way you need it.
+A Ruby Hash specification to ensure unstructured data is structured the way you expect it.
 
 ## Installation
 
