@@ -618,3 +618,11 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the Xpect project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/xpect/blob/master/CODE_OF_CONDUCT.md).
+
+## TODOs
+* Fix paths in tests or provide a better way to communicate where failure happended
+* Add unit tests for
+  * Keys and arrays
+  * Every
+  * Type
+    * Then remove A LOT of tests in spect_spec.rb
