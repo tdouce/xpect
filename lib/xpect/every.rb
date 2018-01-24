@@ -6,7 +6,7 @@ module Xpect
     end
 
     def conform!(data:, path: [])
-      data.map.with_index do |val, _|
+      data.map do |val|
         Xpect::Type.process(@item_spec, @item_spec, val, path)
       end
     end
