@@ -18,7 +18,7 @@ module Xpect
           Type.process_array(spec, val, path)
         when Hash
           Xpect::Spect.conform!(spec: spec, data: val, path: path)
-        when Pred, Keys
+        when Xpect::Pred, Xpect::Keys
           spec.conform!(value: val, path: path)
         when Proc
           Xpect::EqualityHelpers.equal_with_proc?(spec, val, path)
