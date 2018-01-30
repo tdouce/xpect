@@ -2,6 +2,11 @@
 
 A Ruby Hash specification to ensure unstructured data is structured the way you expect it.
 
+## Design Goal
+
+The design goal is write specifications in terms of the object that is being validated. For example, I want to write a
+specification as a `Hash`, as opposed to a DSL, when validating a `Hash`.
+
 ## Installation
 
 Add this line to your application's Gemfile:
