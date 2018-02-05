@@ -36,15 +36,18 @@ the way you intended deep in a function body. This can be useful for various rea
 def some_function(hash_payload)
   spec = {
     person: {
-      first_name: Xpect::Matchers.truthy,
-      last_name: Xpect::Matchers.truthy,
+      name: {
+        first: Xpect::Matchers.truthy,
+        last: Xpect::Matchers.truthy,
+        middle: Xpect::Matchers.anything,
+      },
       footwear: lambda {|v| ['flip flops', 'flip flops and socks', 'hiking boots'].include?(v) },
-      state: 'GA'
+      state: 'GA',
+      age: lambda {|v| v >= 0 }
     }
   }
   
   Xpect::Spect.validate!(spec: spec, data: hash_payload)
-  
   # Continue processing data knowing that the Hash contains valid data.
 end
 
